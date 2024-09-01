@@ -14,9 +14,6 @@ const formatData = (data: number[]) => {
 const DataDisplay = (props: DataDisplayProps) => {
     const {dataSet} = props;
 
-    console.log('dataSet', dataSet.dataSet)
-    console.log('mean', dataSet.length ? dataSet.mean(): '')
-
     return (
         <div className="DataDisplay">
             {

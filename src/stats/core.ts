@@ -28,9 +28,6 @@ export default class DataSet {
     }
 
     range(): number {
-        console.log('l', this.dataSet.length - 1)
-        console.log('v', this.dataSet[this.dataSet.length -1])
-        console.log('0', this.dataSet[0])
         return this.dataSet[this.dataSet.length - 1] - this.dataSet[0];
     }
 

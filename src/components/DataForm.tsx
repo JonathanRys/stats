@@ -16,7 +16,7 @@ const DataForm = () => {
 
   const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    console.log('click data', formData[ACTIVE_INPUT_ID])
+
     if (formData[ACTIVE_INPUT_ID] === undefined) {
         return;
     }
