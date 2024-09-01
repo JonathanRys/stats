@@ -1,0 +1,28 @@
+.Link {
+    background: transparent;
+    border-radius: 8px;
+    border: none;
+    color: #646cff;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    margin: 3px 8px;
+    padding: 0.6em 1.2em;
+    text-decoration: underline;
+  }
+  
+  .Link:hover {
+    color: #535bf2;
+  }
+
+  .Link:focus,
+  .Link:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  @media (prefers-color-scheme: light) {
+    .Link:hover {
+      color: #747bff;
+    }
+  }
+  
