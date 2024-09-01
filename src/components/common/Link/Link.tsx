@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button = (props: ButtonProps) => {
     return (
-        <button className="Link" onClick={props.onClick}>{props.value}</button>
+        <button type="reset" className="Link" onClick={props.onClick}>{props.value}</button>
     );
 }
 

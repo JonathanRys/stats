@@ -3,12 +3,14 @@ import { MouseEventHandler } from "react";
 
 interface ButtonProps {
     value: string;
+    disabled: boolean;
     onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = (props: ButtonProps) => {
+    const { disabled, onClick, value} = props;
     return (
-        <button className="Button" onClick={props.onClick}>{props.value}</button>
+        <button disabled={disabled} className="Button" onClick={onClick}>{value}</button>
     );
 }
 

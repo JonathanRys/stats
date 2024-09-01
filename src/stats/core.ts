@@ -9,8 +9,14 @@ export default class DataSet {
         this.dataSet = [...dataSet].sort((a, b) => a - b);
     }
 
+    get
+    length(): number {
+        return this.dataSet.length;
+    }
+
     add(value: number): void {
         this.dataSet.push(value);
+        this.dataSet = [...this.dataSet].sort((a, b) => a - b);
     }
 
     shift(margin: number = 1): number[] {
@@ -22,6 +28,9 @@ export default class DataSet {
     }
 
     range(): number {
+        console.log('l', this.dataSet.length - 1)
+        console.log('v', this.dataSet[this.dataSet.length -1])
+        console.log('0', this.dataSet[0])
         return this.dataSet[this.dataSet.length - 1] - this.dataSet[0];
     }
 

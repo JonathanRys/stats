@@ -1,41 +1,67 @@
+import './DataForm.css'
 import DataSet from '../stats/core.ts'
+import DataDisplay from './DataDisplay/DataDisplay.tsx'
 import Input from './common/Input/Input.tsx'
 import Button from './common/Button/Button.tsx'
 import Link from './common/Link/Link.tsx'
-import { useState, useRef, MouseEventHandler, ChangeEventHandler } from 'react'
+import { useState, MouseEventHandler, ChangeEventHandler } from 'react'
+import { stringKeyString } from '../../types/json.ts'
+
+const ACTIVE_INPUT_ID = "data-input"; // This is the ID of the input that is used by the Add button
 
 const DataForm = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<stringKeyString>({});
   const [dataSet, setDataSet] = useState<DataSet>(new DataSet([]))
-  const inputRef = useRef<HTMLInputElement>(null);
+  // const inputRef = useRef<HTMLInputElement>(null);
 
-  const clickHandler: MouseEventHandler<HTMLButtonElement> = () => {
-    if (!inputRef?.current?.value) {
+  const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    console.log('click data', formData[ACTIVE_INPUT_ID])
+    if (formData[ACTIVE_INPUT_ID] === undefined) {
         return;
     }
 
-    dataSet.add(parseInt(inputRef.current.value || "0"))
+    const newDataSet = new DataSet(dataSet.dataSet)
+    newDataSet.add(parseInt(formData[ACTIVE_INPUT_ID]))
+    setDataSet(newDataSet)
+    setFormData({...formData, [ACTIVE_INPUT_ID]: ''})
   }
 
   const changeHandler: ChangeEventHandler<HTMLInputElement> = (e) =>  {
     const newValue = e.target.value;
     const targetId = e.target.id;
-    setFormData({...formData, [targetId]: newValue})
+    setFormData({...formData, [targetId]: newValue.toString()})
   };
 
-  console.log(formData)
-  const resetData = () => {
+  const resetData: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault()
     setDataSet(new DataSet([]))
   }
 
+  const numericInputs = [
+    {
+      id: ACTIVE_INPUT_ID,
+      label: "Data Input"
+    }
+  ];
+
   return (
     <form className="DataForm">
-      <Input id="one" onChange={changeHandler} inputref={inputRef} label="Test1" type="text"/>
-      <Input id="two" onChange={changeHandler} inputref={inputRef} label="Test2" type="number"/>
-      <Input id="tre" onChange={changeHandler} inputref={inputRef} label="Test3" type="text"/>
+      <DataDisplay dataSet={dataSet}/>
+      {
+        numericInputs.map(input => <Input 
+          id={input.id}
+          key={`input-${input.id}`}
+          label={input.label}
+          type="number"
+          value={formData[input.id] || ''}
+          onChange={changeHandler}
+        />)
+      }
+
       <div className="DataFormControls">
         <Link onClick={resetData} value="Reset" />
-        <Button onClick={clickHandler} value="OK" />
+        <Button disabled={!formData[ACTIVE_INPUT_ID]} onClick={clickHandler} value="Add" />
       </div>
     </form>
   )

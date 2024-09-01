@@ -1,24 +1,20 @@
 import './Input.css';
-import { ChangeEventHandler, Ref, useEffect } from 'react'
+import { ChangeEventHandler } from 'react'
 
 interface InputProps {
-  id?: string;
+  id: string;
   label?: string;
-  type: string;
-  value?: string | number;
-  inputref: Ref<HTMLInputElement>;
-  onChange: ChangeEventHandler<HTMLInputElement>
+  type?: string;
+  value: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 const Input = (props: InputProps) => {
-  useEffect(() => {
-    // props.inputref?.current?.focus()
-  }, [])
 
   return (
-    <fieldset className='Fieldset'>
+    <fieldset className='InputFieldset'>
       <label className="Label">{props.label}</label>
-      <input className="Input" ref={props.inputref} {...props} />
+      <input className="Input" {...props} />
     </fieldset>
   )
 }

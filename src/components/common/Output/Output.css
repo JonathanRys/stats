@@ -1,0 +1,9 @@
+.OutputFieldset {
+    align-items: center;
+    background-color: #222;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+}

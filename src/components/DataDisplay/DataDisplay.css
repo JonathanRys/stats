@@ -1,0 +1,23 @@
+.DataDisplay {
+    background-color: #333;
+    border: 1px solid #646cff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.DataSet {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.DataPoint {
+    font-style: italic;
+}
+
+.Group {
+    margin-bottom: 15px;
+}
+
+.Group > .OutputFieldset {
+    margin: 5px 0;
+}
