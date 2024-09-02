@@ -75,18 +75,23 @@ export default class DataSet {
 
     iqr(): number {
         // Inter-Quartile Range
-        const quarterIndex: number = this.dataSet.length * 0.25;
-        const q1Index: number = Math.floor(quarterIndex);
-        const q3Index: number = q1Index * 3;
+        let q1Index: number = Math.floor(this.dataSet.length * 0.25);
+        let q3Index: number = Math.floor(this.dataSet.length * 0.75);
         let q1: number = this.dataSet[q1Index];
         let q3: number = this.dataSet[q3Index];
-        if (quarterIndex % 1 === 0) {
-            q1 = (this.dataSet[q1Index - 1] + this.dataSet[q1Index]) * 0.5;
-            q3 = (this.dataSet[q3Index - 1] + this.dataSet[q3Index]) * 0.5;
+    
+        if (this.dataSet.length % 2 === 0) {
+            if ((this.dataSet.length * 0.5) % 2 === 0) {
+                q1 = (this.dataSet[q1Index - 1] + this.dataSet[q1Index]) * 0.5
+                q3 = (this.dataSet[q3Index - 1] + this.dataSet[q3Index]) * 0.5
+            }
+        } else {
+            if (((this.dataSet.length - 1) * 0.5) % 2 === 0) {
+                q1 = (this.dataSet[q1Index - 1] + this.dataSet[q1Index]) * 0.5
+                q3 = (this.dataSet[q3Index] + this.dataSet[q3Index + 1]) * 0.5
+            }
         }
-        if (this.debug) {
-            console.log('q1', q1, 'q3', q3);
-        }
+    
         return q3 - q1;
     }
 

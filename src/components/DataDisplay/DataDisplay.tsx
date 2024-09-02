@@ -6,9 +6,25 @@ interface DataDisplayProps {
   dataSet: DataSet;
 }
 
-const formatData = (data: number[]) => {
-    if (data.length <= 1) return data;
-    return data.reduce((acc, a, i) => { return acc + (i ? ', ' : '') + a}, '')
+const formatData = (dataPoint: number, precision: number = 2) => {
+    // Convert to a number to trim extra zeros
+    return Number(dataPoint.toFixed(precision)).toString();
+}
+
+const formatDataSet = (data: DataSet) => {
+    const dataInRange = data.removeOutliers();
+    const formattedDataSet = data.dataSet.map((value, i) => {
+        let newValue = <>{value}</>
+        if (data.length > 3) {
+            // Don't show outliers unless the IQR is relevant
+            newValue = <span className="red">{value}</span>
+        }
+
+        const formattedValue = dataInRange.includes(value) ? value : newValue;
+        return <span key={`item-${i}`}>{i ? <>, {formattedValue}</> : formattedValue}</span>;
+    })
+
+    return <>{'[ '}{formattedDataSet}{' ]'}</>
 }
 
 const DataDisplay = (props: DataDisplayProps) => {
@@ -20,31 +36,31 @@ const DataDisplay = (props: DataDisplayProps) => {
                 dataSet.length ? (
                     <>
                         <div className='Group'>
-                            <Output id="mean" label="Mean" value={(dataSet.mean()).toString()} />
-                            <Output id="median" label="Median" value={(dataSet.median()).toString()} />
-                            <Output id="mode" label="Mode" value={(dataSet.mode()).toString()} />
+                            <Output id="mean" label="Mean" value={formatData(dataSet.mean())} />
+                            <Output id="median" label="Median" value={formatData(dataSet.median())} />
+                            <Output id="mode" label="Mode" value={formatData(dataSet.mode())} />
                         </div>
                         {
                             dataSet.length > 1 ? (
                                 <>
                                     <div className='Group'>
-                                        <Output id="range" label="Range" value={(dataSet.range()).toString()} />
+                                        <Output id="range" label="Range" value={formatData(dataSet.range())} />
                                         {
                                             dataSet.length > 3 ? (
-                                                <Output id="iqr" label="IQR" value={(dataSet.iqr()).toString()} />
+                                                <Output id="iqr" label="IQR" value={formatData(dataSet.iqr())} />
                                             ) : null
                                         }
-                                        <Output id="mad" label="Mean Abs. Deviation" value={(dataSet.mad()).toFixed(2)} />
+                                        <Output id="mad" label="Mean Abs. Deviation" value={formatData(dataSet.mad())} />
                                     </div>
                                     <div className='Group'>
-                                        <Output id="variance" label="Variance" value={(dataSet.varianceS()).toFixed(4)} />
-                                        <Output id="std-deviation" label="Std. Deviation" value={(dataSet.stdDevS()).toFixed(4)} />
+                                        <Output id="variance" label="Variance" value={formatData(dataSet.varianceS(), 4)} />
+                                        <Output id="std-deviation" label="Std. Deviation" value={formatData(dataSet.stdDevS(), 4)} />
                                     </div>
                                 </>
                             ) : null
                         }
                         <hr />
-                        <div className="DataSet">{'[ '}{formatData(dataSet.dataSet)}{' ]'}</div>
+                        <div className="DataSet">{formatDataSet(dataSet)}</div>
                     </>
                 ) : <div>No info to display.</div>
             }

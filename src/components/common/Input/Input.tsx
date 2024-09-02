@@ -1,22 +1,22 @@
 import './Input.css';
-import { ChangeEventHandler } from 'react'
+import { ChangeEventHandler, InputHTMLAttributes, forwardRef } from 'react'
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label?: string;
-  type?: string;
   value: string;
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-const Input = (props: InputProps) => {
+const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { label } = props;
 
   return (
     <fieldset className='InputFieldset'>
-      <label className="Label">{props.label}</label>
-      <input className="Input" {...props} />
+      <label className="Label">{label}</label>
+      <input {...props} ref={ref} className="Input"  />
     </fieldset>
   )
-}
+})
 
 export default Input

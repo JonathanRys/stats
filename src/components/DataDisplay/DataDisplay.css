@@ -10,6 +10,11 @@
     font-size: 1.2em;
 }
 
+.DataSet span.red {
+    color: #da290a
+}
+
+
 .DataPoint {
     font-style: italic;
 }

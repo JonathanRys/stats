@@ -4,7 +4,7 @@ import DataDisplay from './DataDisplay/DataDisplay.tsx'
 import Input from './common/Input/Input.tsx'
 import Button from './common/Button/Button.tsx'
 import Link from './common/Link/Link.tsx'
-import { useState, MouseEventHandler, ChangeEventHandler } from 'react'
+import { useState, useRef, MouseEventHandler, ChangeEventHandler, useEffect } from 'react'
 import { stringKeyString } from '../../types/json.ts'
 
 const ACTIVE_INPUT_ID = "data-input"; // This is the ID of the input that is used by the Add button
@@ -12,7 +12,16 @@ const ACTIVE_INPUT_ID = "data-input"; // This is the ID of the input that is use
 const DataForm = () => {
   const [formData, setFormData] = useState<stringKeyString>({});
   const [dataSet, setDataSet] = useState<DataSet>(new DataSet([]))
-  // const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const { current } = inputRef;
+    if (current !== null) {
+      console.log('scrolling into view')
+      current.scrollIntoView({behavior: "smooth"});
+    }
+
+  }, []);
 
   const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -51,6 +60,7 @@ const DataForm = () => {
       {
         numericInputs.map(input => <Input 
           id={input.id}
+          ref={inputRef}
           key={`input-${input.id}`}
           label={input.label}
           type="number"
