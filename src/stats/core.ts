@@ -28,19 +28,19 @@ export default class DataSet {
     }
 
     range(): number {
-        return this.dataSet[this.dataSet.length - 1] - this.dataSet[0];
+        return this.dataSet[this.length - 1] - this.dataSet[0];
     }
 
     mean(): number {
-        if (!this.dataSet.length) throw new RangeError('Cannot calculate the mean of an empty data set.');
-        return this.dataSet.reduce((x, acc) => x + acc, 0) / this.dataSet.length;
+        if (!this.length) throw new RangeError('Cannot calculate the mean of an empty data set.');
+        return this.dataSet.reduce((x, acc) => x + acc, 0) / this.length;
     }
 
     median(): number {
-        if (!this.dataSet.length) throw new RangeError('Cannot calculate the median of an empty data set.');
+        if (!this.length) throw new RangeError('Cannot calculate the median of an empty data set.');
     
-        const i: number = Math.floor(this.dataSet.length / 2);
-        if (this.dataSet.length % 2 !== 0) {
+        const i: number = Math.floor(this.length / 2);
+        if (this.length % 2 !== 0) {
             return this.dataSet[i];
         } else {
             return (this.dataSet[i - 1] + this.dataSet[i]) / 2
@@ -48,7 +48,7 @@ export default class DataSet {
     }
 
     mode(): number  {
-        if (!this.dataSet.length) throw new RangeError('Cannot calculate the mode of an empty data set.');
+        if (!this.length) throw new RangeError('Cannot calculate the mode of an empty data set.');
         const freq: numberKeyNumber = {};
         let max: number = 0;
         let count: number = 0;
@@ -75,19 +75,20 @@ export default class DataSet {
 
     iqr(): number {
         // Inter-Quartile Range
-        let q1Index: number = Math.floor(this.dataSet.length * 0.25);
-        let q3Index: number = Math.floor(this.dataSet.length * 0.75);
+        let q1Index: number = Math.floor(this.length * 0.25);
+        let q3Index: number = Math.floor(this.length * 0.75);
         let q1: number = this.dataSet[q1Index];
         let q3: number = this.dataSet[q3Index];
     
-        if (this.dataSet.length % 2 === 0) {
-            if ((this.dataSet.length * 0.5) % 2 === 0) {
+        if (this.length % 2 === 0) {
+            if ((this.length * 0.5) % 2 === 0) {
                 q1 = (this.dataSet[q1Index - 1] + this.dataSet[q1Index]) * 0.5
                 q3 = (this.dataSet[q3Index - 1] + this.dataSet[q3Index]) * 0.5
             }
         } else {
-            if (((this.dataSet.length - 1) * 0.5) % 2 === 0) {
+            if (((this.length - 1) * 0.5) % 2 === 0) {
                 q1 = (this.dataSet[q1Index - 1] + this.dataSet[q1Index]) * 0.5
+                // We removed the median so we need to add 1 here
                 q3 = (this.dataSet[q3Index] + this.dataSet[q3Index + 1]) * 0.5
             }
         }
@@ -102,7 +103,7 @@ export default class DataSet {
         for (const item of this.dataSet) {
             total += Math.abs(_mean - item);
         }
-        return total / this.dataSet.length;
+        return total / this.length;
     }
     
     varianceP(): number {
@@ -112,7 +113,7 @@ export default class DataSet {
         for (const item of this.dataSet) {
             total += Math.pow(_mean - item, 2);
         }
-        return total / this.dataSet.length;
+        return total / this.length;
     }
     
     stdDevP(): number {
@@ -127,7 +128,7 @@ export default class DataSet {
         for (const item of this.dataSet) {
             total += Math.pow(_mean - item, 2);
         }
-        return total / (this.dataSet.length - 1);
+        return total / (this.length - 1);
     }
     
     stdDevS(): number {
