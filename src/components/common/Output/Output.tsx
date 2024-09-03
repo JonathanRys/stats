@@ -12,7 +12,7 @@ const Output = (props: InputProps) => {
   return (
     <fieldset className='OutputFieldset'>
       <label className="Label">{label}</label>
-      <output className="Output" id={id}>{value}</output>
+      <output className="Output" id={`output-${id}`}>{value}</output>
     </fieldset>
   )
 }

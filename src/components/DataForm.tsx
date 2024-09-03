@@ -5,9 +5,8 @@ import Input from './common/Input/Input.tsx'
 import Button from './common/Button/Button.tsx'
 import Link from './common/Link/Link.tsx'
 import { useState, useRef, MouseEventHandler, ChangeEventHandler, useEffect } from 'react'
-import { stringKeyString } from '../../types/json.ts'
-
-const ACTIVE_INPUT_ID = "data-input"; // This is the ID of the input that is used by the Add button
+import { stringKeyString } from '../types/json.ts'
+import { InputDefinition, DataLink } from '../types/data.ts'
 
 const DataForm = () => {
   const [formData, setFormData] = useState<stringKeyString>({});
@@ -21,17 +20,41 @@ const DataForm = () => {
     }
   }, [dataSet]);
 
-  const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
+  // TODO: Move this to a hook
+  // This object represents an input and its associated action
+  // This allows me to link an input or a form with a button
+  const addData = {
+    id: "data-input",
+    clickCallback: (inputId: string) => {
+      const newDataSet = new DataSet(dataSet.dataSet)
+      newDataSet.add(parseInt(formData[inputId]))
+      setDataSet(newDataSet)
+      setFormData({...formData, [inputId]: ''})
+    },
+    validations: (inputId: string) => formData[inputId] !== undefined
+  }
+  const zScore = {
+    id: 's-score',
+    clickCallback: (inputId: string) => {
+      //Update state
+      setFormData({...formData, [inputId]: ''})
+    }
+  }
 
-    if (formData[ACTIVE_INPUT_ID] === undefined) {
-        return;
+  const clickHandlerCreator = (dataLink: DataLink) => {
+    // Click handler for a button given an input or form's id
+    const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+      e.preventDefault();
+
+      // Return if the associated input is empty
+      if (dataLink.validations && !dataLink.validations(dataLink.id)) {
+        return
+      }
+
+      dataLink.clickCallback(dataLink.id);
     }
 
-    const newDataSet = new DataSet(dataSet.dataSet)
-    newDataSet.add(parseInt(formData[ACTIVE_INPUT_ID]))
-    setDataSet(newDataSet)
-    setFormData({...formData, [ACTIVE_INPUT_ID]: ''})
+    return clickHandler;
   }
 
   const changeHandler: ChangeEventHandler<HTMLInputElement> = (e) =>  {
@@ -45,32 +68,44 @@ const DataForm = () => {
     setDataSet(new DataSet([]))
   }
 
-  const numericInputs = [
-    {
-      id: ACTIVE_INPUT_ID,
-      label: "Add data"
-    }
-  ];
+  const inputTransformer = (input: InputDefinition) => <Input 
+    id={input.id}
+    ref={addDataInputRef}
+    key={`input-${input.id}`}
+    label={input.label}
+    type="number" // to support other types, create a wrapper
+    value={formData[input.id] || ''}
+    onChange={changeHandler}
+  />
 
   return (
     <form className="DataForm">
       <DataDisplay dataSet={dataSet}/>
       {
-        numericInputs.map(input => <Input 
-          id={input.id}
-          ref={addDataInputRef}
-          key={`input-${input.id}`}
-          label={input.label}
-          type="number"
-          value={formData[input.id] || ''}
-          onChange={changeHandler}
-        />)
+        inputTransformer({
+          id: addData.id,
+          label: "Add data"
+        })
       }
-
       <div className="DataFormControls">
         <Link onClick={resetData} value="Reset" />
-        <Button disabled={!formData[ACTIVE_INPUT_ID]} onClick={clickHandler} value="Add" />
+        <Button disabled={!formData[addData.id]} onClick={clickHandlerCreator(addData)} value="Add" />
       </div>
+      {
+        // Only allow the user to use this input if there is enough data
+        dataSet.length >= 2 && <> 
+        {
+          inputTransformer({
+            id: zScore.id,
+            label: "Find z-score of"
+          })
+        }
+        <div className="DataFormControls">
+          <Button disabled={!formData[zScore.id]} onClick={clickHandlerCreator(zScore)} value="Calculate" />
+        </div>
+      </>
+      }
+
     </form>
   )
 }

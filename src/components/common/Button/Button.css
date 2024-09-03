@@ -10,6 +10,14 @@
     margin: 3px 5px;
     transition: border-color 0.25s;
   }
+
+  .Button:disabled {
+    cursor:default;
+  }
+
+  .Button:disabled:hover {
+    border-color: transparent;
+  }
   
   .Button:hover {
     border-color: #646cff;

@@ -3,8 +3,9 @@ import { ChangeEventHandler, InputHTMLAttributes, forwardRef } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  label?: string;
   value: string;
+  label?: string;
+  units?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
