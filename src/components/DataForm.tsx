@@ -12,16 +12,14 @@ const ACTIVE_INPUT_ID = "data-input"; // This is the ID of the input that is use
 const DataForm = () => {
   const [formData, setFormData] = useState<stringKeyString>({});
   const [dataSet, setDataSet] = useState<DataSet>(new DataSet([]))
-  const inputRef = useRef<HTMLInputElement>(null);
+  const addDataInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const { current } = inputRef;
+    const { current } = addDataInputRef;
     if (current !== null) {
-      console.log('scrolling into view')
       current.scrollIntoView({behavior: "smooth"});
     }
-
-  }, []);
+  }, [dataSet]);
 
   const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -50,7 +48,7 @@ const DataForm = () => {
   const numericInputs = [
     {
       id: ACTIVE_INPUT_ID,
-      label: "Data Input"
+      label: "Add data"
     }
   ];
 
@@ -60,7 +58,7 @@ const DataForm = () => {
       {
         numericInputs.map(input => <Input 
           id={input.id}
-          ref={inputRef}
+          ref={addDataInputRef}
           key={`input-${input.id}`}
           label={input.label}
           type="number"
