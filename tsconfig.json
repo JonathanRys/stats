@@ -23,6 +23,6 @@
     "sourceMap": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "core.ts"],
+  "include": ["src", "core.ts", "types"],
   "exclude": ["*.spec.ts"]
 }

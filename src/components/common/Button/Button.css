@@ -5,7 +5,7 @@
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: #0a0a1a;
     cursor: pointer;
     margin: 3px 5px;
     transition: border-color 0.25s;
@@ -29,14 +29,7 @@
   }
 
   @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-    .Link:hover {
-      color: #747bff;
-    }
     .Button {
-      background-color: #f9f9f9;
+      background-color: #cfcfcf;
     }
   }

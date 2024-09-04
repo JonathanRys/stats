@@ -10,12 +10,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { label } = props;
+  const { label, units } = props;
+
+
 
   return (
     <fieldset className='InputFieldset'>
       <label className="Label">{label}</label>
-      <input {...props} ref={ref} className="Input"  />
+      {
+        units ? 
+        <span className={`label ${units}`}><input {...props} ref={ref} className="Input" /></span> : 
+        <input {...props} ref={ref} className="Input" />
+      }
     </fieldset>
   )
 })

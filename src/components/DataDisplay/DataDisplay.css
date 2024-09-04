@@ -1,5 +1,5 @@
 .DataDisplay {
-    background-color: #333;
+    background-color: #1a1a1a;
     border: 1px solid #646cff;
     border-radius: 8px;
     padding: 20px;
@@ -27,3 +27,11 @@
 .Group > .OutputFieldset {
     margin: 5px 0;
 }
+
+@media (prefers-color-scheme: light) {
+    .DataDisplay {
+        color: #213547;
+        background-color: #ffffff;
+    }
+}
+

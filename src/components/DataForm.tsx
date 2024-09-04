@@ -5,8 +5,8 @@ import Input from './common/Input/Input.tsx'
 import Button from './common/Button/Button.tsx'
 import Link from './common/Link/Link.tsx'
 import { useState, useRef, MouseEventHandler, ChangeEventHandler, useEffect } from 'react'
-import { stringKeyString } from '../types/json.ts'
-import { InputDefinition, DataLink } from '../types/data.ts'
+import { stringKeyString } from '../../types/json.ts'
+import { InputDefinition, DataLink } from '../../types/data.ts'
 
 const DataForm = () => {
   const [formData, setFormData] = useState<stringKeyString>({});
@@ -34,7 +34,7 @@ const DataForm = () => {
     validations: (inputId: string) => formData[inputId] !== undefined
   }
   const zScore = {
-    id: 's-score',
+    id: 'z-score',
     clickCallback: (inputId: string) => {
       //Update state
       setFormData({...formData, [inputId]: ''})
@@ -73,6 +73,7 @@ const DataForm = () => {
     ref={addDataInputRef}
     key={`input-${input.id}`}
     label={input.label}
+    units={input.units}
     type="number" // to support other types, create a wrapper
     value={formData[input.id] || ''}
     onChange={changeHandler}

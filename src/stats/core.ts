@@ -1,6 +1,6 @@
 import zScoreJson from '../../data/zScores.json';
 import { formatKey } from './util.js';
-import type { numberKeyNumber, stringKeyNumber } from '../types/json.js'
+import type { numberKeyNumber, stringKeyNumber } from '../../types/json.js'
 
 export default class DataSet {
     debug: boolean = true;

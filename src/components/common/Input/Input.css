@@ -1,23 +1,44 @@
 .InputFieldset {
-    align-items: flex-start;
-    background-color: #333;
-    border: 1px solid #646cff;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 15px 15px;
+  align-items: flex-start;
+  background-color: #1a1a1a;
+  border: 1px solid #646cff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px 15px;
+}
+
+.Label {
+  font-size: 1em;
+  font-weight: 500;
+  padding: 5px 3px;
+}
+
+.Input {
+  border-radius: 8px;;
+  font-size: 0.95em;
+  font-weight: 500;
+  min-width: 84%;
+  padding: 8px 15px;
+}
+
+.label .Input {
+  padding-right: 2em;
+}
+
+.label.percent::after {
+  content: '%';
+  margin-left: -1.25em;
+}
+
+.label.sigma::after {
+  content: 'σ';
+  margin-left: -1.25em;
+}
+
+@media (prefers-color-scheme: light) {
+  .InputFieldset {
+    color: #213547;
+    background-color: #ffffff;
   }
-  
-  .Label {
-    font-size: 1em;
-    font-weight: 500;
-    padding: 5px 3px;
-  }
-  
-  .Input {
-    border-radius: 8px;;
-    font-size: 0.95em;
-    font-weight: 500;
-    min-width: 84%;
-    padding: 8px 15px;
-  }
+}

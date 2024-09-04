@@ -1,9 +1,26 @@
 .OutputFieldset {
     align-items: center;
-    background-color: #222;
+    background-color: #2b2a33;
     border-radius: 8px;
     display: flex;
     flex-direction: row;
     gap: 10px;
     justify-content: space-between;
+}
+
+.OutputFieldset.percent::after {
+    content: '%';
+    margin-left: -1.25em;
+}
+
+.OutputFieldset.sigma::after {
+    content: 'σ';
+    margin-left: -1.25em;
+}
+
+@media (prefers-color-scheme: light) {
+    .OutputFieldset {
+        color: #213547;
+        background-color: #ffffff;
+    }
 }
