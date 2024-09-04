@@ -54,7 +54,7 @@ const DataDisplay = (props: DataDisplayProps) => {
                                     </div>
                                     <div className='Group'>
                                         <Output id="variance" label="Variance" value={formatData(dataSet.varianceS(), 4)} />
-                                        <Output id="std-deviation" label="Std. Deviation" value={formatData(dataSet.stdDevS(), 4)} />
+                                        <Output id="std-deviation" label="Std. Deviation (σ)" value={formatData(dataSet.stdDevS(), 4)} />
                                     </div>
                                 </>
                             ) : null

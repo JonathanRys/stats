@@ -17,6 +17,7 @@
 
   .Button:disabled:hover {
     border-color: transparent;
+    background-color: #1a1a1a;
   }
   
   .Button:hover {
